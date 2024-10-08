@@ -49,12 +49,12 @@ namespace GitHub.Runner.Common.Tests.Worker
 
                 // Assert.
                 TrackingConfig config = _trackingManager.LoadIfExists(_ec.Object, trackingFile);
-                Assert.Equal("github-actions-runner", config.PipelineDirectory);
-                Assert.Equal($"github-actions-runner{Path.DirectorySeparatorChar}github-actions-runner", config.WorkspaceDirectory);
+                Assert.Equal("runner", config.PipelineDirectory);
+                Assert.Equal($"runner{Path.DirectorySeparatorChar}runner", config.WorkspaceDirectory);
                 Assert.Equal("mattrwi/runner", config.RepositoryName);
 
                 Assert.Equal(1, config.Repositories.Count);
-                Assert.Equal($"github-actions-runner{Path.DirectorySeparatorChar}github-actions-runner", config.Repositories["mattrwi/runner"].RepositoryPath);
+                Assert.Equal($"runner{Path.DirectorySeparatorChar}runner", config.Repositories["mattrwi/runner"].RepositoryPath);
 
                 // Manipulate the expected seconds due to loss of granularity when the
                 // date-time-offset is serialized in a friendly format.
@@ -81,10 +81,10 @@ namespace GitHub.Runner.Common.Tests.Worker
                 // Assert.
                 Assert.NotNull(config);
                 Assert.Equal("mattrwi/runner", config.RepositoryName);
-                Assert.Equal("github-actions-runner", config.PipelineDirectory);
-                Assert.Equal($"github-actions-runner{Path.DirectorySeparatorChar}github-actions-runner", config.WorkspaceDirectory);
+                Assert.Equal("runner", config.PipelineDirectory);
+                Assert.Equal($"runner{Path.DirectorySeparatorChar}runner", config.WorkspaceDirectory);
                 Assert.Equal(1, config.Repositories.Count);
-                Assert.Equal($"github-actions-runner{Path.DirectorySeparatorChar}github-actions-runner", config.Repositories["mattrwi/runner"].RepositoryPath);
+                Assert.Equal($"runner{Path.DirectorySeparatorChar}runner", config.Repositories["mattrwi/runner"].RepositoryPath);
             }
         }
 
