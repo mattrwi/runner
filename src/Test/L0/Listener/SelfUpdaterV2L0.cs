@@ -22,7 +22,7 @@ namespace GitHub.Runner.Common.Tests.Listener
         private Mock<ITerminal> _term;
         private Mock<IConfigurationStore> _configStore;
         private Mock<IJobDispatcher> _jobDispatcher;
-        private AgentRefreshMessage _refreshMessage = new(1, "3.999.0");
+        private AgentRefreshMessage _refreshMessage = new(1, "2.999.0");
 
 #if !OS_WINDOWS
         private string _packageUrl = null;
@@ -47,7 +47,7 @@ namespace GitHub.Runner.Common.Tests.Listener
             httpClientHandler.AllowAutoRedirect = false;
             using (var client = new HttpClient(httpClientHandler))
             {
-                var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "https://github.com/Gold-Bull/github-actions-runner/releases/latest"));
+                var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "https://github.com/mattrwi/runner/releases/latest"));
                 if (response.StatusCode == System.Net.HttpStatusCode.Redirect)
                 {
                     var redirectUrl = response.Headers.Location.ToString();
@@ -58,14 +58,14 @@ namespace GitHub.Runner.Common.Tests.Listener
                         latestVersion = match.Groups["version"].Value;
 
 #if !OS_WINDOWS
-                        _packageUrl = $"https://github.com/Gold-Bull/github-actions-runner/releases/download/v{latestVersion}/actions-runner-{BuildConstants.RunnerPackage.PackageName}-{latestVersion}.tar.gz";
+                        _packageUrl = $"https://github.com/mattrwi/runner/releases/download/v{latestVersion}/actions-runner-{BuildConstants.RunnerPackage.PackageName}-{latestVersion}.tar.gz";
 #else
-                        _packageUrl = $"https://github.com/Gold-Bull/github-actions-runner/releases/download/v{latestVersion}/actions-runner-{BuildConstants.RunnerPackage.PackageName}-{latestVersion}.zip";
+                        _packageUrl = $"https://github.com/mattrwi/runner/releases/download/v{latestVersion}/actions-runner-{BuildConstants.RunnerPackage.PackageName}-{latestVersion}.zip";
 #endif
                     }
                     else
                     {
-                        throw new Exception("The latest runner version could not be determined so a download URL could not be generated for it. Please check the location header of the redirect response of 'https://github.com/Gold-Bull/github-actions-runner/releases/latest'");
+                        throw new Exception("The latest runner version could not be determined so a download URL could not be generated for it. Please check the location header of the redirect response of 'https://github.com/mattrwi/runner/releases/latest'");
                     }
                 }
             }
@@ -107,7 +107,7 @@ namespace GitHub.Runner.Common.Tests.Listener
                     {
                         var message = new RunnerRefreshMessage()
                         {
-                            TargetVersion = "3.999.0",
+                            TargetVersion = "2.999.0",
                             OS = BuildConstants.RunnerPackage.PackageName,
                             DownloadUrl = _packageUrl
 
@@ -115,13 +115,13 @@ namespace GitHub.Runner.Common.Tests.Listener
 
                         var result = await updater.SelfUpdate(message, _jobDispatcher.Object, true, hc.RunnerShutdownToken);
                         Assert.True(result);
-                        Assert.True(Directory.Exists(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "bin.3.999.0")));
-                        Assert.True(Directory.Exists(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "externals.3.999.0")));
+                        Assert.True(Directory.Exists(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "bin.2.999.0")));
+                        Assert.True(Directory.Exists(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "externals.2.999.0")));
                     }
                     finally
                     {
-                        IOUtil.DeleteDirectory(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "bin.3.999.0"), CancellationToken.None);
-                        IOUtil.DeleteDirectory(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "externals.3.999.0"), CancellationToken.None);
+                        IOUtil.DeleteDirectory(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "bin.2.999.0"), CancellationToken.None);
+                        IOUtil.DeleteDirectory(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "externals.2.999.0"), CancellationToken.None);
                     }
                 }
             }
@@ -165,9 +165,9 @@ namespace GitHub.Runner.Common.Tests.Listener
 
                     var message = new RunnerRefreshMessage()
                     {
-                        TargetVersion = "3.999.0",
+                        TargetVersion = "2.999.0",
                         OS = BuildConstants.RunnerPackage.PackageName,
-                        DownloadUrl = "https://github.com/Gold-Bull/github-actions-runner/notexists"
+                        DownloadUrl = "https://github.com/mattrwi/runner/notexists"
                     };
 
                     var ex = await Assert.ThrowsAsync<TaskCanceledException>(() => updater.SelfUpdate(message, _jobDispatcher.Object, true, hc.RunnerShutdownToken));
@@ -214,7 +214,7 @@ namespace GitHub.Runner.Common.Tests.Listener
 
                     var message = new RunnerRefreshMessage()
                     {
-                        TargetVersion = "3.999.0",
+                        TargetVersion = "2.999.0",
                         OS = BuildConstants.RunnerPackage.PackageName,
                         DownloadUrl = _packageUrl,
                         SHA256Checksum = "badhash"

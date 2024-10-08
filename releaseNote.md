@@ -4,7 +4,7 @@
 ## New Contributors
 * Refer to release to [GitHub Actions Runner v2.314.1 for the full list of contributors](https://github.com/actions/runner/releases/tag/v2.314.1)
 
-**Full Changelog**: https://github.com/Gold-Bull/github-actions-runner/compare/v3.313.0...v3.314.1
+**Full Changelog**: https://github.com/mattrwi/runner/compare/v3.313.0...v3.314.1
 
 _Note: Actions Runner follows a progressive release policy, so the latest release might not be available to your enterprise, organization, or repository yet.
 To confirm which version of the Actions Runner you should expect, please view the download instructions for your enterprise, organization, or repository.
@@ -18,7 +18,7 @@ The following snipped needs to be run on `powershell`:
 # Create a folder under the drive root
 mkdir \actions-runner ; cd \actions-runner
 # Download the latest runner package
-Invoke-WebRequest -Uri https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-win-x64-<RUNNER_VERSION>.zip -OutFile actions-runner-win-x64-<RUNNER_VERSION>.zip
+Invoke-WebRequest -Uri https://github.com/mattrwi/runner/releases/download/v<RUNNER_VERSION>/actions-runner-win-x64-<RUNNER_VERSION>.zip -OutFile actions-runner-win-x64-<RUNNER_VERSION>.zip
 # Extract the installer
 Add-Type -AssemblyName System.IO.Compression.FileSystem ;
 [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD\actions-runner-win-x64-<RUNNER_VERSION>.zip", "$PWD")
@@ -34,7 +34,7 @@ The following snipped needs to be run on `powershell`:
 # Create a folder under the drive root
 mkdir \actions-runner ; cd \actions-runner
 # Download the latest runner package
-Invoke-WebRequest -Uri https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-win-arm64-<RUNNER_VERSION>.zip -OutFile actions-runner-win-arm64-<RUNNER_VERSION>.zip
+Invoke-WebRequest -Uri https://github.com/mattrwi/runner/releases/download/v<RUNNER_VERSION>/actions-runner-win-arm64-<RUNNER_VERSION>.zip -OutFile actions-runner-win-arm64-<RUNNER_VERSION>.zip
 # Extract the installer
 Add-Type -AssemblyName System.IO.Compression.FileSystem ;
 [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD\actions-runner-win-arm64-<RUNNER_VERSION>.zip", "$PWD")
@@ -46,7 +46,7 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem ;
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-osx-x64-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/mattrwi/runner/releases/download/v<RUNNER_VERSION>/actions-runner-osx-x64-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-osx-x64-<RUNNER_VERSION>.tar.gz
 ```
@@ -57,7 +57,7 @@ tar xzf ./actions-runner-osx-x64-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-osx-arm64-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/mattrwi/runner/releases/download/v<RUNNER_VERSION>/actions-runner-osx-arm64-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-osx-arm64-<RUNNER_VERSION>.tar.gz
 ```
@@ -68,7 +68,7 @@ tar xzf ./actions-runner-osx-arm64-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/mattrwi/runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz
 ```
@@ -79,7 +79,7 @@ tar xzf ./actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/mattrwi/runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz
 ```
@@ -90,7 +90,7 @@ tar xzf ./actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-arm-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/mattrwi/runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-arm-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-linux-arm-<RUNNER_VERSION>.tar.gz
 ```
@@ -101,7 +101,7 @@ tar xzf ./actions-runner-linux-arm-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-s390x-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/mattrwi/runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-s390x-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-linux-s390x-<RUNNER_VERSION>.tar.gz
 ```
