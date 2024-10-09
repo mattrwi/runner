@@ -22,7 +22,7 @@ namespace GitHub.Runner.Common.Tests.Listener
         private Mock<ITerminal> _term;
         private Mock<IConfigurationStore> _configStore;
         private Mock<IJobDispatcher> _jobDispatcher;
-        private AgentRefreshMessage _refreshMessage = new(1, "2.999.0");
+        private AgentRefreshMessage _refreshMessage = new(1, "3.999.0");
 
 #if !OS_WINDOWS
         private string _packageUrl = null;
@@ -47,31 +47,31 @@ namespace GitHub.Runner.Common.Tests.Listener
             httpClientHandler.AllowAutoRedirect = false;
             using (var client = new HttpClient(httpClientHandler))
             {
-                var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "https://github.com/actions/runner/releases/latest"));
+                var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "https://github.com/Gold-Bull/github-actions-runner/releases/latest"));
                 if (response.StatusCode == System.Net.HttpStatusCode.Redirect)
                 {
                     var redirectUrl = response.Headers.Location.ToString();
-                    Regex regex = new(@"/runner/releases/tag/v(?<version>\d+\.\d+\.\d+)");
+                    Regex regex = new(@"/github-actions-runner/releases/tag/v(?<version>\d+\.\d+\.\d+)");
                     var match = regex.Match(redirectUrl);
                     if (match.Success)
                     {
                         latestVersion = match.Groups["version"].Value;
 
 #if !OS_WINDOWS
-                        _packageUrl = $"https://github.com/actions/runner/releases/download/v{latestVersion}/actions-runner-{BuildConstants.RunnerPackage.PackageName}-{latestVersion}.tar.gz";
+                        _packageUrl = $"https://github.com/Gold-Bull/github-actions-runner/releases/download/v{latestVersion}/actions-runner-{BuildConstants.RunnerPackage.PackageName}-{latestVersion}.tar.gz";
 #else
-                        _packageUrl = $"https://github.com/actions/runner/releases/download/v{latestVersion}/actions-runner-{BuildConstants.RunnerPackage.PackageName}-{latestVersion}.zip";
+                        _packageUrl = $"https://github.com/Gold-Bull/github-actions-runner/releases/download/v{latestVersion}/actions-runner-{BuildConstants.RunnerPackage.PackageName}-{latestVersion}.zip";
 #endif
                     }
                     else
                     {
-                        throw new Exception("The latest runner version could not be determined so a download URL could not be generated for it. Please check the location header of the redirect response of 'https://github.com/actions/runner/releases/latest'");
+                        throw new Exception("The latest runner version could not be determined so a download URL could not be generated for it. Please check the location header of the redirect response of 'https://github.com/Gold-Bull/github-actions-runner/releases/latest'");
                     }
                 }
             }
 
-            _runnerServer.Setup(x => x.GetPackageAsync("agent", BuildConstants.RunnerPackage.PackageName, "2.999.0", true, It.IsAny<CancellationToken>()))
-                         .Returns(Task.FromResult(new PackageMetadata() { Platform = BuildConstants.RunnerPackage.PackageName, Version = new PackageVersion("2.999.0"), DownloadUrl = _packageUrl }));
+            _runnerServer.Setup(x => x.GetPackageAsync("agent", BuildConstants.RunnerPackage.PackageName, "3.999.0", true, It.IsAny<CancellationToken>()))
+                         .Returns(Task.FromResult(new PackageMetadata() { Platform = BuildConstants.RunnerPackage.PackageName, Version = new PackageVersion("3.999.0"), DownloadUrl = _packageUrl }));
 
         }
 
@@ -118,13 +118,13 @@ namespace GitHub.Runner.Common.Tests.Listener
                     {
                         var result = await updater.SelfUpdate(_refreshMessage, _jobDispatcher.Object, true, hc.RunnerShutdownToken);
                         Assert.True(result);
-                        Assert.True(Directory.Exists(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "bin.2.999.0")));
-                        Assert.True(Directory.Exists(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "externals.2.999.0")));
+                        Assert.True(Directory.Exists(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "bin.3.999.0")));
+                        Assert.True(Directory.Exists(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "externals.3.999.0")));
                     }
                     finally
                     {
-                        IOUtil.DeleteDirectory(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "bin.2.999.0"), CancellationToken.None);
-                        IOUtil.DeleteDirectory(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "externals.2.999.0"), CancellationToken.None);
+                        IOUtil.DeleteDirectory(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "bin.3.999.0"), CancellationToken.None);
+                        IOUtil.DeleteDirectory(Path.Combine(hc.GetDirectory(WellKnownDirectory.Root), "externals.3.999.0"), CancellationToken.None);
                     }
                 }
             }
@@ -165,8 +165,8 @@ namespace GitHub.Runner.Common.Tests.Listener
                     hc.EnqueueInstance<IProcessInvoker>(p3);
                     updater.Initialize(hc);
 
-                    _runnerServer.Setup(x => x.GetPackageAsync("agent", BuildConstants.RunnerPackage.PackageName, "2.200.0", true, It.IsAny<CancellationToken>()))
-                             .Returns(Task.FromResult(new PackageMetadata() { Platform = BuildConstants.RunnerPackage.PackageName, Version = new PackageVersion("2.200.0"), DownloadUrl = _packageUrl }));
+                    _runnerServer.Setup(x => x.GetPackageAsync("agent", BuildConstants.RunnerPackage.PackageName, "3.200.0", true, It.IsAny<CancellationToken>()))
+                             .Returns(Task.FromResult(new PackageMetadata() { Platform = BuildConstants.RunnerPackage.PackageName, Version = new PackageVersion("3.200.0"), DownloadUrl = _packageUrl }));
 
                     _runnerServer.Setup(x => x.UpdateAgentUpdateStateAsync(1, 1, It.IsAny<string>(), It.IsAny<string>()))
                                  .Callback((int p, ulong a, string s, string t) =>
@@ -175,7 +175,7 @@ namespace GitHub.Runner.Common.Tests.Listener
                                  })
                                  .Returns(Task.FromResult(new TaskAgent()));
 
-                    var result = await updater.SelfUpdate(new AgentRefreshMessage(1, "2.200.0"), _jobDispatcher.Object, true, hc.RunnerShutdownToken);
+                    var result = await updater.SelfUpdate(new AgentRefreshMessage(1, "3.200.0"), _jobDispatcher.Object, true, hc.RunnerShutdownToken);
                     Assert.False(result);
                 }
             }
@@ -206,8 +206,8 @@ namespace GitHub.Runner.Common.Tests.Listener
                     hc.SetSingleton<IConfigurationStore>(_configStore.Object);
                     hc.SetSingleton<IHttpClientHandlerFactory>(new HttpClientHandlerFactory());
 
-                    _runnerServer.Setup(x => x.GetPackageAsync("agent", BuildConstants.RunnerPackage.PackageName, "2.999.0", true, It.IsAny<CancellationToken>()))
-                             .Returns(Task.FromResult(new PackageMetadata() { Platform = BuildConstants.RunnerPackage.PackageName, Version = new PackageVersion("2.999.0"), DownloadUrl = $"https://github.com/actions/runner/notexists" }));
+                    _runnerServer.Setup(x => x.GetPackageAsync("agent", BuildConstants.RunnerPackage.PackageName, "3.999.0", true, It.IsAny<CancellationToken>()))
+                             .Returns(Task.FromResult(new PackageMetadata() { Platform = BuildConstants.RunnerPackage.PackageName, Version = new PackageVersion("3.999.0"), DownloadUrl = $"https://github.com/Gold-Bull/github-actions-runner/notexists" }));
 
                     var p1 = new ProcessInvokerWrapper();
                     p1.Initialize(hc);
@@ -259,8 +259,8 @@ namespace GitHub.Runner.Common.Tests.Listener
                     hc.SetSingleton<IConfigurationStore>(_configStore.Object);
                     hc.SetSingleton<IHttpClientHandlerFactory>(new HttpClientHandlerFactory());
 
-                    _runnerServer.Setup(x => x.GetPackageAsync("agent", BuildConstants.RunnerPackage.PackageName, "2.999.0", true, It.IsAny<CancellationToken>()))
-                             .Returns(Task.FromResult(new PackageMetadata() { Platform = BuildConstants.RunnerPackage.PackageName, Version = new PackageVersion("2.999.0"), DownloadUrl = _packageUrl, HashValue = "bad_hash" }));
+                    _runnerServer.Setup(x => x.GetPackageAsync("agent", BuildConstants.RunnerPackage.PackageName, "3.999.0", true, It.IsAny<CancellationToken>()))
+                             .Returns(Task.FromResult(new PackageMetadata() { Platform = BuildConstants.RunnerPackage.PackageName, Version = new PackageVersion("3.999.0"), DownloadUrl = _packageUrl, HashValue = "bad_hash" }));
 
                     var p1 = new ProcessInvokerWrapper();
                     p1.Initialize(hc);

@@ -1,22 +1,10 @@
 ## What's Changed
-* Prepare v2.313.0 Release by @luketomlinson in https://github.com/actions/runner/pull/3137
-* Pass RunnerOS during job acquire. by @TingluoHuang in https://github.com/actions/runner/pull/3140
-* Process `snapshot` tokens by @davidomid in https://github.com/actions/runner/pull/3135
-* Update dotnet sdk to latest version @6.0.419 by @github-actions in https://github.com/actions/runner/pull/3158
-* handle broker run service exception handling by @yaananth in https://github.com/actions/runner/pull/3163
-* Add a retry logic to docker login operation by @enescakir in https://github.com/actions/runner/pull/3089
-* Broker fixes for token refreshes and AccessDeniedException by @luketomlinson in https://github.com/actions/runner/pull/3161
-* Remove USE_BROKER_FLOW by @luketomlinson in https://github.com/actions/runner/pull/3162
-* Refresh Token for BrokerServer by @luketomlinson in https://github.com/actions/runner/pull/3167
-* Better step timeout message. by @TingluoHuang in https://github.com/actions/runner/pull/3166
-* Fix summaries for actions results by @SrRyan in https://github.com/actions/runner/pull/3174
+* Refer to release to [GitHub Actions Runner v2.314.1 for the full list of changes](https://github.com/actions/runner/releases/tag/v2.314.1)
 
 ## New Contributors
-* @davidomid made their first contribution in https://github.com/actions/runner/pull/3135
-* @enescakir made their first contribution in https://github.com/actions/runner/pull/3089
-* @SrRyan made their first contribution in https://github.com/actions/runner/pull/3174
+* Refer to release to [GitHub Actions Runner v2.314.1 for the full list of contributors](https://github.com/actions/runner/releases/tag/v2.314.1)
 
-**Full Changelog**: https://github.com/actions/runner/compare/v2.313.0...v2.314.0
+**Full Changelog**: https://github.com/Gold-Bull/github-actions-runner/compare/v3.313.0...v3.314.1
 
 _Note: Actions Runner follows a progressive release policy, so the latest release might not be available to your enterprise, organization, or repository yet.
 To confirm which version of the Actions Runner you should expect, please view the download instructions for your enterprise, organization, or repository.
@@ -30,7 +18,7 @@ The following snipped needs to be run on `powershell`:
 # Create a folder under the drive root
 mkdir \actions-runner ; cd \actions-runner
 # Download the latest runner package
-Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v<RUNNER_VERSION>/actions-runner-win-x64-<RUNNER_VERSION>.zip -OutFile actions-runner-win-x64-<RUNNER_VERSION>.zip
+Invoke-WebRequest -Uri https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-win-x64-<RUNNER_VERSION>.zip -OutFile actions-runner-win-x64-<RUNNER_VERSION>.zip
 # Extract the installer
 Add-Type -AssemblyName System.IO.Compression.FileSystem ;
 [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD\actions-runner-win-x64-<RUNNER_VERSION>.zip", "$PWD")
@@ -46,7 +34,7 @@ The following snipped needs to be run on `powershell`:
 # Create a folder under the drive root
 mkdir \actions-runner ; cd \actions-runner
 # Download the latest runner package
-Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v<RUNNER_VERSION>/actions-runner-win-arm64-<RUNNER_VERSION>.zip -OutFile actions-runner-win-arm64-<RUNNER_VERSION>.zip
+Invoke-WebRequest -Uri https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-win-arm64-<RUNNER_VERSION>.zip -OutFile actions-runner-win-arm64-<RUNNER_VERSION>.zip
 # Extract the installer
 Add-Type -AssemblyName System.IO.Compression.FileSystem ;
 [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD\actions-runner-win-arm64-<RUNNER_VERSION>.zip", "$PWD")
@@ -58,7 +46,7 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem ;
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/actions/runner/releases/download/v<RUNNER_VERSION>/actions-runner-osx-x64-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-osx-x64-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-osx-x64-<RUNNER_VERSION>.tar.gz
 ```
@@ -69,7 +57,7 @@ tar xzf ./actions-runner-osx-x64-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/actions/runner/releases/download/v<RUNNER_VERSION>/actions-runner-osx-arm64-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-osx-arm64-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-osx-arm64-<RUNNER_VERSION>.tar.gz
 ```
@@ -80,7 +68,7 @@ tar xzf ./actions-runner-osx-arm64-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/actions/runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz
 ```
@@ -91,7 +79,7 @@ tar xzf ./actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/actions/runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz
 ```
@@ -102,9 +90,20 @@ tar xzf ./actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz
 # Create a folder
 mkdir actions-runner && cd actions-runner
 # Download the latest runner package
-curl -O -L https://github.com/actions/runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-arm-<RUNNER_VERSION>.tar.gz
+curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-arm-<RUNNER_VERSION>.tar.gz
 # Extract the installer
 tar xzf ./actions-runner-linux-arm-<RUNNER_VERSION>.tar.gz
+```
+
+## [Experimental] Linux s390x
+
+``` bash
+# Create a folder
+mkdir actions-runner && cd actions-runner
+# Download the latest runner package
+curl -O -L https://github.com/Gold-Bull/github-actions-runner/releases/download/v<RUNNER_VERSION>/actions-runner-linux-s390x-<RUNNER_VERSION>.tar.gz
+# Extract the installer
+tar xzf ./actions-runner-linux-s390x-<RUNNER_VERSION>.tar.gz
 ```
 
 ## Using your self hosted runner
@@ -121,3 +120,4 @@ The SHA-256 checksums for the packages included in this build are shown below:
 - actions-runner-linux-x64-<RUNNER_VERSION>.tar.gz <!-- BEGIN SHA linux-x64 --><LINUX_X64_SHA><!-- END SHA linux-x64 -->
 - actions-runner-linux-arm64-<RUNNER_VERSION>.tar.gz <!-- BEGIN SHA linux-arm64 --><LINUX_ARM64_SHA><!-- END SHA linux-arm64 -->
 - actions-runner-linux-arm-<RUNNER_VERSION>.tar.gz <!-- BEGIN SHA linux-arm --><LINUX_ARM_SHA><!-- END SHA linux-arm -->
+- actions-runner-linux-s390x-<RUNNER_VERSION>.tar.gz <!-- BEGIN SHA linux-s390x --><LINUX_S390X_SHA><!-- END SHA linux-s390x -->

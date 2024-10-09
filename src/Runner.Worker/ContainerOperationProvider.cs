@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Threading;
@@ -321,8 +322,13 @@ namespace GitHub.Runner.Worker
             container.ContainerWorkDirectory = container.TranslateToContainerPath(workingDirectory);
             if (!FeatureManager.IsContainerHooksEnabled(executionContext.Global.Variables))
             {
+#if OS_WINDOWS
+                container.ContainerEntryPoint = "ping";
+                container.ContainerEntryPointArgs = "\"-t\" \"localhost\"";
+#else
                 container.ContainerEntryPoint = "tail";
                 container.ContainerEntryPointArgs = "\"-f\" \"/dev/null\"";
+#endif
             }
         }
 
@@ -355,7 +361,6 @@ namespace GitHub.Runner.Worker
             }
         }
 
-#if !OS_WINDOWS
         private async Task<List<string>> ExecuteCommandAsync(IExecutionContext context, string command, string arg)
         {
             context.Command($"{command} {arg}");
@@ -401,7 +406,6 @@ namespace GitHub.Runner.Worker
 
             return outputs;
         }
-#endif
 
         private async Task CreateContainerNetworkAsync(IExecutionContext executionContext, string network)
         {

@@ -58,7 +58,8 @@ namespace GitHub.Runner.Common
             X86,
             X64,
             Arm,
-            Arm64
+            Arm64,
+            s390x
         }
 
         public static class Runner
@@ -81,6 +82,8 @@ namespace GitHub.Runner.Common
             public static readonly Architecture PlatformArchitecture = Architecture.Arm;
 #elif ARM64
             public static readonly Architecture PlatformArchitecture = Architecture.Arm64;
+#elif S390X
+            public static readonly Architecture PlatformArchitecture = Architecture.s390x;
 #else
             public static readonly Architecture PlatformArchitecture = Architecture.X64;
 #endif
