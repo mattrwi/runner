@@ -335,7 +335,7 @@ namespace GitHub.Runner.Common.Tests.Worker
                 Id = actionId,
                 Reference = new Pipelines.RepositoryPathReference()
                 {
-                    Name = "Gold-Bull/github-actions-runner",
+                    Name = "mattrwi/runner",
                     Ref = "v1"
                 },
                 Inputs = actionInputs

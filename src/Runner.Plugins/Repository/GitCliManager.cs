@@ -103,7 +103,7 @@ namespace GitHub.Runner.Plugins.Repository
             }
 
             // Set the user agent.
-            string gitHttpUserAgentEnv = $"git/{gitVersion.ToString()} (github-actions-runner-git/{BuildConstants.RunnerPackage.Version})";
+            string gitHttpUserAgentEnv = $"git/{gitVersion.ToString()} (runner-git/{BuildConstants.RunnerPackage.Version})";
             context.Debug($"Set git useragent to: {gitHttpUserAgentEnv}.");
             gitEnv["GIT_HTTP_USER_AGENT"] = gitHttpUserAgentEnv;
         }
