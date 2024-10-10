@@ -18,7 +18,7 @@ jobs:
   build:
     strategy:
       matrix:
-        runtime: [ linux-x64, linux-arm64, linux-arm, win-x64, win-arm64, osx-x64, osx-arm64 ]
+        runtime: [ linux-x64, linux-arm64, linux-arm, linux-s390x, win-x64, win-arm64, osx-x64, osx-arm64 ]
         include:
         - runtime: linux-x64
           os: ubuntu-latest
@@ -29,6 +29,10 @@ jobs:
           devScript: ./dev.sh
 
         - runtime: linux-arm
+          os: ubuntu-latest
+          devScript: ./dev.sh
+
+        - runtime: linux-s390x
           os: ubuntu-latest
           devScript: ./dev.sh
 
@@ -50,7 +54,18 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+  
+    - name: Get runner version
+      id: runnerInfo
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          const fs = require('fs');
+          const runnerVersion = fs.readFileSync('src/runnerversion', 'utf8').replace(/\n$/g, '')
+          core.setOutput('version', runnerVersion);
+          core.setOutput('package_name', `actions-runner-${{ matrix.runtime }}-${runnerVersion}${{ startsWith(matrix.runtime, 'win') && '.zip' || '.tar.gz' }}`);
 
     # Build runner layout
     - name: Build & Layout Release
@@ -63,13 +78,13 @@ jobs:
       run: |
         ${{ matrix.devScript }} test
       working-directory: src
-      if: matrix.runtime != 'linux-arm64' && matrix.runtime != 'linux-arm' && matrix.runtime != 'osx-arm64' && matrix.runtime != 'win-arm64'
+      if: matrix.runtime != 'linux-arm64' && matrix.runtime != 'linux-arm' && matrix.runtime != 'linux-s390x' && matrix.runtime != 'osx-arm64' && matrix.runtime != 'win-arm64'
 
     # Create runner package tar.gz/zip
     - name: Package Release
       if: github.event_name != 'pull_request'
       run: |
-        ${{ matrix.devScript }} package Release
+        ${{ matrix.devScript }} package Release ${{ matrix.runtime }}
       working-directory: src
 
     # Upload runner package tar.gz/zip as artifact
@@ -78,5 +93,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: runner-package-${{ matrix.runtime }}
-        path: |
-          _package
+        path: _package/${{ steps.runnerInfo.outputs.package_name }}
