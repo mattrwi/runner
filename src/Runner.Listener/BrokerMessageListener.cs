@@ -42,7 +42,7 @@ namespace GitHub.Runner.Listener
             _brokerServer = HostContext.GetService<IBrokerServer>();
         }
 
-        public async Task<Boolean> CreateSessionAsync(CancellationToken token)
+        public async Task<CreateSessionResult> CreateSessionAsync(CancellationToken token)
         {
             Trace.Entering();
 
@@ -69,7 +69,8 @@ namespace GitHub.Runner.Listener
                 Version = BuildConstants.RunnerPackage.Version,
                 OSDescription = RuntimeInformation.OSDescription,
             };
-            string sessionName = $"{Environment.MachineName ?? "RUNNER"}";
+            var currentProcess = Process.GetCurrentProcess();
+            string sessionName = $"{Environment.MachineName ?? "RUNNER"} (PID: {currentProcess.Id})";
             var taskAgentSession = new TaskAgentSession(sessionName, agent);
 
             string errorMessage = string.Empty;
@@ -99,7 +100,7 @@ namespace GitHub.Runner.Listener
                         encounteringError = false;
                     }
 
-                    return true;
+                    return CreateSessionResult.Success;
                 }
                 catch (OperationCanceledException) when (token.IsCancellationRequested)
                 {
@@ -123,7 +124,7 @@ namespace GitHub.Runner.Listener
                         if (string.Equals(vssOAuthEx.Error, "invalid_client", StringComparison.OrdinalIgnoreCase))
                         {
                             _term.WriteError("Failed to create a session. The runner registration has been deleted from the server, please re-configure. Runner registrations are automatically deleted for runners that have not connected to the service recently.");
-                            return false;
+                            return CreateSessionResult.Failure;
                         }
 
                         // Check whether we get 401 because the runner registration already removed by the service.
@@ -134,14 +135,18 @@ namespace GitHub.Runner.Listener
                         if (string.Equals(authError, "invalid_client", StringComparison.OrdinalIgnoreCase))
                         {
                             _term.WriteError("Failed to create a session. The runner registration has been deleted from the server, please re-configure. Runner registrations are automatically deleted for runners that have not connected to the service recently.");
-                            return false;
+                            return CreateSessionResult.Failure;
                         }
                     }
 
                     if (!IsSessionCreationExceptionRetriable(ex))
                     {
                         _term.WriteError($"Failed to create session. {ex.Message}");
-                        return false;
+                        if (ex is TaskAgentSessionConflictException)
+                        {
+                            return CreateSessionResult.SessionConflict;
+                        }
+                        return CreateSessionResult.Failure;
                     }
 
                     if (!encounteringError) //print the message only on the first error
