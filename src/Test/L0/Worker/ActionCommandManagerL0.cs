@@ -40,9 +40,9 @@ namespace GitHub.Runner.Common.Tests.Worker
 
                 _commandManager.EnablePluginInternalCommand();
 
-                Assert.True(_commandManager.TryProcessCommand(_ec.Object, "##[internal-set-repo-path repoFullName=actions/runner;workspaceRepo=true]somepath", null));
+                Assert.True(_commandManager.TryProcessCommand(_ec.Object, "##[internal-set-repo-path repoFullName=mattrwi/runner;workspaceRepo=true]somepath", null));
 
-                _pipelineDirectoryManager.Verify(x => x.UpdateRepositoryDirectory(_ec.Object, "actions/runner", "somepath", true), Times.Once);
+                _pipelineDirectoryManager.Verify(x => x.UpdateRepositoryDirectory(_ec.Object, "mattrwi/runner", "somepath", true), Times.Once);
             }
         }
 
@@ -67,13 +67,13 @@ namespace GitHub.Runner.Common.Tests.Worker
 
                 _commandManager.EnablePluginInternalCommand();
 
-                Assert.True(_commandManager.TryProcessCommand(_ec.Object, "##[internal-set-repo-path repoFullName=actions/runner;workspaceRepo=true]somepath", null));
+                Assert.True(_commandManager.TryProcessCommand(_ec.Object, "##[internal-set-repo-path repoFullName=mattrwi/runner;workspaceRepo=true]somepath", null));
 
                 _commandManager.DisablePluginInternalCommand();
 
-                Assert.False(_commandManager.TryProcessCommand(_ec.Object, "##[internal-set-repo-path repoFullName=actions/runner;workspaceRepo=true]somepath", null));
+                Assert.False(_commandManager.TryProcessCommand(_ec.Object, "##[internal-set-repo-path repoFullName=mattrwi/runner;workspaceRepo=true]somepath", null));
 
-                _pipelineDirectoryManager.Verify(x => x.UpdateRepositoryDirectory(_ec.Object, "actions/runner", "somepath", true), Times.Once);
+                _pipelineDirectoryManager.Verify(x => x.UpdateRepositoryDirectory(_ec.Object, "mattrwi/runner", "somepath", true), Times.Once);
             }
         }
 
